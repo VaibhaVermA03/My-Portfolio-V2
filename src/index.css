@@ -30,3 +30,18 @@ html.lenis {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* Hide scrollbar - Chrome, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar - Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar - IE/Edge */
+* {
+  -ms-overflow-style: none;
+}
