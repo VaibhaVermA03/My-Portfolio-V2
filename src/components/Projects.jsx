@@ -32,7 +32,7 @@ const WordMaskReveal = ({ text, baseDelay = 0, className = "" }) => {
       {words.map((word, i) => (
         <span
           key={i}
-          className="inline-block overflow-hidden mr-[0.25em] pb-[2px]"
+          className="inline-block overflow-hidden mr-[0.15em] pb-[2px]"
         >
           <motion.span
             className="inline-block"
@@ -51,6 +51,7 @@ const WordMaskReveal = ({ text, baseDelay = 0, className = "" }) => {
     </span>
   );
 };
+
 
 // Inline reveal for italic accent words inside headings
 const InlineWordReveal = ({ children, delay = 0, className = "" }) => {
@@ -76,49 +77,54 @@ const Projects = ({ setExternalPopupState }) => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    document.body.style.overflow = selectedProject ? "hidden" : "auto";
+  document.body.style.overflow = selectedProject ? "hidden" : "auto";
 
-    const navbar =
-      document.querySelector("nav") ||
-      document.querySelector("header") ||
-      document.querySelector(".navbar");
-    const logo = document.querySelector(".fixed.top-6.left-6");
+  const navbar =
+    document.querySelector("nav") ||
+    document.querySelector("header") ||
+    document.querySelector(".navbar");
 
-    if (selectedProject) {
-      if (navbar) {
-        navbar.style.opacity = "0";
-        navbar.style.pointerEvents = "none";
-        navbar.style.transition = "opacity 0.3s ease";
-      }
-      if (logo) {
-        logo.style.opacity = "0";
-        logo.style.pointerEvents = "none";
-        logo.style.transition = "opacity 0.3s ease";
-      }
-      if (setExternalPopupState) setExternalPopupState(true);
-    } else {
-      if (navbar) {
-        navbar.style.opacity = "1";
-        navbar.style.pointerEvents = "auto";
-      }
-      if (logo) {
-        logo.style.opacity = "1";
-        logo.style.pointerEvents = "auto";
-      }
-      if (setExternalPopupState) setExternalPopupState(false);
+  const logo =
+    document.querySelector(".fixed") ||
+    document.querySelector("[class*='logo']") ||
+    document.querySelector("img[alt*='logo']");
+
+  if (selectedProject) {
+    if (navbar) {
+      navbar.style.opacity = "0";
+      navbar.style.pointerEvents = "none";
+      navbar.style.transition = "opacity 0.3s ease";
     }
+    if (logo) {
+      logo.style.opacity = "0";
+      logo.style.pointerEvents = "none";
+      logo.style.transition = "opacity 0.3s ease";
+    }
+    if (setExternalPopupState) setExternalPopupState(true);
+  } else {
+    if (navbar) {
+      navbar.style.opacity = "1";
+      navbar.style.pointerEvents = "auto";
+    }
+    if (logo) {
+      logo.style.opacity = "1";
+      logo.style.pointerEvents = "auto";
+    }
+    if (setExternalPopupState) setExternalPopupState(false);
+  }
 
-    return () => {
-      if (navbar) {
-        navbar.style.opacity = "1";
-        navbar.style.pointerEvents = "auto";
-      }
-      if (logo) {
-        logo.style.opacity = "1";
-        logo.style.pointerEvents = "auto";
-      }
-    };
-  }, [selectedProject, setExternalPopupState]);
+  return () => {
+    if (navbar) {
+      navbar.style.opacity = "1";
+      navbar.style.pointerEvents = "auto";
+    }
+    if (logo) {
+      logo.style.opacity = "1";
+      logo.style.pointerEvents = "auto";
+    }
+  };
+}, [selectedProject, setExternalPopupState]);
+
 
   const projectsData = [
     {
@@ -219,9 +225,20 @@ const Projects = ({ setExternalPopupState }) => {
             </MaskReveal>
 
             {/* Main heading — word by word mask reveal */}
-            <h2 className="font-playfair text-[1.9rem] sm:text-4xl lg:text-[4.5rem] leading-[1.45] sm:leading-[1.25] lg:leading-[1.1] font-semibold text-gray-900 tracking-tight text-left">
-              <WordMaskReveal text="The Projects I've built to solve" baseDelay={0.1} />
-              {" "}
+            <h2 className="font-playfair 
+               text-[1.8rem] 
+               sm:text-4xl 
+               lg:text-[4.5rem] 
+               leading-[1.35] 
+               sm:leading-[1.2] 
+               lg:leading-[1.08] 
+               font-semibold 
+               text-gray-900 
+               tracking-[-0.015em] 
+               text-left break-words">
+              
+            <WordMaskReveal text="The Projects I've built to solve" baseDelay={0.1} />
+             {" "}
               <InlineWordReveal delay={0.62} className="italic font-light text-gray-400 hover:text-gray-900 transition-colors duration-700">
                 real-world
               </InlineWordReveal>
@@ -233,6 +250,7 @@ const Projects = ({ setExternalPopupState }) => {
               </InlineWordReveal>
               <InlineWordReveal delay={1.12}>.</InlineWordReveal>
             </h2>
+
           </div>
 
           {/* Right: Selected Works + Year
@@ -261,8 +279,8 @@ const Projects = ({ setExternalPopupState }) => {
             key={project.id}
             className="sticky w-full bg-white border-t border-l border-r border-gray-200 rounded-[2rem] lg:rounded-[2.5rem] shadow-[0_-2px_15px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden"
             style={{
-              top: `13vh`,
-              height: "84vh",
+              top: `15vh`,
+              height: "80vh",
               zIndex: 10 + index,
               marginBottom: "40vh",
             }}
@@ -353,7 +371,7 @@ const Projects = ({ setExternalPopupState }) => {
             >
               <motion.button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 z-20 w-12 h-12 bg-white/90 backdrop-blur-md rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 text-gray-900 shadow-sm"
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[999] w-12 h-12 bg-white/90 backdrop-blur-md rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors duration-200 text-gray-900 shadow-sm"
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -372,7 +390,7 @@ const Projects = ({ setExternalPopupState }) => {
                   alt={selectedProject.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-12 z-20">
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-12 pr-16 sm:pr-12 z-20">
                   <motion.h3
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

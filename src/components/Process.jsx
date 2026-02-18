@@ -25,7 +25,7 @@ const WordMaskReveal = ({ text, baseDelay = 0, className = "" }) => {
   return (
     <span ref={ref} className={`inline-flex items-baseline flex-wrap ${className}`}>
       {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.25em] py-2 -my-2">
+        <span key={i} className="inline-block overflow-hidden mr-[0.12em] py-2 -my-2">
           <motion.span
             className="inline-block"
             initial={{ y: "110%", opacity: 0 }}
@@ -112,27 +112,42 @@ const Process = () => {
       
       {/* 1. Header is now OUTSIDE the sticky container to scroll normally first */}
       <div className="pt-32 pb-16 px-6 sm:px-12 lg:px-20 relative z-20 w-full bg-gray-50 border-b border-gray-200/50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <MaskReveal className="mb-2">
-              <p className="font-stylish text-3xl sm:text-4xl text-gray-400">The Workflow</p>
-            </MaskReveal>
-            <h2 className="font-playfair text-5xl sm:text-7xl lg:text-[6rem] leading-[1.1] font-bold text-gray-900 tracking-tight flex items-baseline flex-wrap gap-x-2">
-              <WordMaskReveal text="My" baseDelay={0.1} />
-              <InlineWordReveal delay={0.3} className="italic font-light text-gray-400">
-                Process
-              </InlineWordReveal>
-            </h2>
-          </div>
-          <div className="hidden sm:block">
-            <MaskReveal delay={0.5}>
-              <p className="font-sans text-gray-500 text-sm sm:text-base max-w-xs md:text-right leading-relaxed">
-                A streamlined approach to turning bold ideas into digital realities.
-              </p>
-            </MaskReveal>
-          </div>
-        </div>
-      </div>
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+    
+    <div className="w-full">
+      <MaskReveal className="mb-2">
+        <p className="font-stylish text-3xl sm:text-4xl text-gray-400">
+          The Workflow
+        </p>
+      </MaskReveal>
+
+      <h2 className="font-playfair 
+                     text-5xl 
+                     sm:text-7xl 
+                     lg:text-[6rem] 
+                     leading-[1.1] 
+                     font-bold 
+                     text-gray-900 
+                     tracking-[-0.015em] 
+                     flex items-baseline flex-wrap gap-x-1">
+        <WordMaskReveal text="My" baseDelay={0.1} />
+        <InlineWordReveal delay={0.3} className="italic font-light text-gray-400">
+          Process
+        </InlineWordReveal>
+      </h2>
+    </div>
+
+    {/* Mobile + Desktop Responsive Right Content */}
+    <div className="w-full md:w-auto text-center md:text-right">
+      <MaskReveal delay={0.5}>
+        <p className="font-sans text-gray-500 text-sm sm:text-base max-w-xs mx-auto md:mx-0 leading-relaxed">
+          A streamlined approach to turning bold ideas into digital realities.
+        </p>
+      </MaskReveal>
+    </div>
+
+  </div>
+</div>
 
       {/* 2. Scrolling Track - Yeh tab sticky hoga jab cards center mein honge */}
       <div ref={targetRef} className="relative h-[450vh] w-full">

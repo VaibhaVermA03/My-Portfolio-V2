@@ -3,19 +3,19 @@ import { motion, useInView, useMotionValue, useTransform, animate } from "framer
 
 const AnimatedCounter = ({ value, label }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10px" }); 
-  
+  const isInView = useInView(ref, { once: true, margin: "-10px" });
+
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
-  
+
   const numericValue = parseInt(value.replace(/\D/g, "")) || 0;
-  const suffix = value.replace(/[0-9]/g, ""); 
+  const suffix = value.replace(/[0-9]/g, "");
 
   useEffect(() => {
     if (isInView && numericValue > 0) {
       const controls = animate(count, numericValue, {
-         duration: 2.5,
-         ease: [0.22, 1, 0.36, 1] 
+        duration: 2.8,
+        ease: [0.16, 1, 0.3, 1] // smoother cinematic ease
       });
       return controls.stop;
     }
@@ -23,25 +23,26 @@ const AnimatedCounter = ({ value, label }) => {
 
   return (
     <div ref={ref} className="flex flex-col space-y-3 group">
+      
       {/* Counter Value */}
-      <div className="overflow-hidden pb-2 -mb-2">
-        <motion.span 
-          initial={{ y: "100%" }}
-          animate={isInView ? { y: 0 } : { y: "100%" }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-playfair text-5xl lg:text-6xl text-gray-900 group-hover:-translate-y-2 transition-transform duration-300 ease-out flex"
+      <div className="overflow-hidden">
+        <motion.span
+          initial={{ y: "120%" }}
+          animate={isInView ? { y: 0 } : { y: "120%" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-playfair text-4xl sm:text-5xl lg:text-6xl text-gray-900 pb-[0.2em]"
         >
           {value === "∞" ? "∞" : <><motion.span>{rounded}</motion.span>{suffix}</>}
         </motion.span>
       </div>
-      
-      {/* Label with Masked Reveal */}
-      <div className="overflow-hidden pb-1 -mb-1">
-        <motion.span 
-          initial={{ y: "100%" }}
-          animate={isInView ? { y: 0 } : { y: "100%" }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="block font-sans text-xs sm:text-sm font-bold uppercase tracking-[0.15em] text-gray-500"
+
+      {/* Label */}
+      <div className="overflow-hidden">
+        <motion.span
+          initial={{ y: "120%" }}
+          animate={isInView ? { y: 0 } : { y: "120%" }}
+          transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="block font-sans text-xs sm:text-sm font-bold uppercase tracking-[0.15em] text-gray-500 pb-[0.15em]"
         >
           {label}
         </motion.span>
@@ -56,18 +57,20 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15, 
-        delayChildren: 0.2
+        staggerChildren: 0.18,
+        delayChildren: 0.25
       }
     }
   };
 
-  // Child Variant 
   const itemVariants = {
-    hidden: { y: "110%" }, 
-    visible: { 
-      y: 0, 
-      transition: { duration: 1.4, ease: [0.6, 0.01, 0.05, 0.9] } 
+    hidden: { y: "120%" },
+    visible: {
+      y: 0,
+      transition: {
+        duration: 1.4,
+        ease: [0.16, 1, 0.3, 1]
+      }
     }
   };
 
@@ -79,82 +82,83 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="relative z-30 min-h-screen w-full bg-white py-24 px-6 sm:px-12 lg:px-20 overflow-hidden flex flex-col justify-center">
+    <section
+      id="about"
+      className="relative z-30 w-full bg-white py-20 px-5 sm:px-10 lg:px-20 overflow-x-hidden"
+    >
       
-      {/* ABSTRACT BACKGROUND GRADIENTS */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#00bfff]/5 blur-[120px] pointer-events-none z-0"></div>
-      <div className="absolute bottom-[10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#00bfff]/10 blur-[100px] pointer-events-none z-0"></div>
+      {/* Background Blobs */}
+      <div className="absolute top-0 left-0 w-[60vw] h-[60vw] rounded-full bg-[#00bfff]/5 blur-[120px] pointer-events-none -z-10"></div>
+      <div className="absolute bottom-0 right-0 w-[50vw] h-[50vw] rounded-full bg-[#00bfff]/10 blur-[100px] pointer-events-none -z-10"></div>
 
-      {/* Main Trigger Container */}
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }} 
-        className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24"
+        viewport={{ once: true, amount: 0.2 }}
+        className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-14 lg:gap-24"
       >
         
-        {/* LEFT COLUMN */}
-        <div className="w-full lg:w-[55%] flex flex-col justify-center">
+        {/* LEFT */}
+        <div className="w-full lg:w-[55%]">
           
-          {/* 1. The Philosophy */}
-          <div className="overflow-hidden mb-8 lg:mb-12 p-2 -m-2">
-            <motion.p variants={itemVariants} className="font-stylish text-3xl sm:text-4xl text-gray-400 hover:text-gray-900 transition-colors duration-300 origin-bottom-left block">
+          <div className="overflow-hidden mb-8">
+            <motion.p
+              variants={itemVariants}
+              className="block font-stylish text-2xl sm:text-3xl md:text-4xl text-gray-400 hover:text-gray-900 transition-colors duration-300 pb-[0.2em]"
+            >
               The Philosophy
             </motion.p>
           </div>
-          
-          {/* 2. Main Headline (Line by Line Reveal) */}
-          <h2 className="font-playfair text-5xl sm:text-6xl lg:text-[5rem] leading-[1.1] font-semibold text-gray-900 tracking-tight">
-             <div className="overflow-hidden pb-4 -mb-4 pt-4 -mt-4">
-                <motion.span variants={itemVariants} className="block">
-                   I engineer
-                </motion.span>
-             </div>
-             
-             <div className="overflow-hidden pb-4 -mb-4 pt-4 -mt-4">
-                 <motion.span variants={itemVariants} className="block">
-                    <span className="italic font-light text-gray-400 hover:text-gray-900 transition-colors duration-500">aesthetic</span> digital
-                 </motion.span>
-             </div>
 
-             <div className="overflow-hidden pb-4 -mb-4 pt-4 -mt-4">
-                <motion.span variants={itemVariants} className="block">
-                   experiences backed
+          <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.15] font-semibold text-gray-900 tracking-tight break-words">
+            
+            {[
+              "I engineer",
+              <>
+                <span className="italic font-light text-gray-400 hover:text-gray-900 transition-colors duration-500">
+                  aesthetic
+                </span>{" "}
+                digital
+              </>,
+              "experiences backed",
+              <>
+                by robust{" "}
+                <span className="italic font-light text-gray-400 hover:text-gray-900 transition-colors duration-500">
+                  MERN
+                </span>
+              </>,
+              "architectures."
+            ].map((line, i) => (
+              <div key={i} className="overflow-hidden">
+                <motion.span
+                  variants={itemVariants}
+                  className="block pb-[0.2em]"
+                >
+                  {line}
                 </motion.span>
-             </div>
+              </div>
+            ))}
 
-             <div className="overflow-hidden pb-4 -mb-4 pt-4 -mt-4 pr-4 -mr-4">
-                <motion.span variants={itemVariants} className="block">
-                   by robust <span className="italic font-light text-gray-400 hover:text-gray-900 transition-colors duration-500">MERN</span>
-                </motion.span>
-             </div>
-
-             <div className="overflow-hidden pb-4 -mb-4 pt-4 -mt-4">
-                <motion.span variants={itemVariants} className="block">
-                   architectures.
-                </motion.span>
-             </div>
           </h2>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="w-full lg:w-[45%] flex flex-col gap-16 lg:pt-24">
+        {/* RIGHT */}
+        <div className="w-full lg:w-[45%] flex flex-col gap-12 lg:pt-20">
           
-          {/* Paragraph (Masked Reveal) */}
-          <div className="overflow-hidden p-2 -m-2">
+          <div className="overflow-hidden">
             <motion.div variants={itemVariants}>
-              <p className="text-gray-600 font-sans text-lg sm:text-xl leading-relaxed">
-                Development isn't just about writing code; it's about solving problems elegantly. 
-                Based in Delhi NCR, my approach is minimalist yet deeply functional - stripping away the unnecessary so the core user experience can shine.
+              <p className="text-gray-600 font-sans text-base sm:text-lg md:text-xl leading-relaxed pb-[0.2em]">
+                Development isn't just about writing code; it's about solving problems elegantly.
+                Based in Delhi NCR, my approach is minimalist yet deeply functional -
+                stripping away the unnecessary so the core user experience can shine.
               </p>
             </motion.div>
           </div>
 
-          {/* 2x2 Stats Grid (Animated Numbers + Masked Labels) */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 border-t border-gray-200 pt-12">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-gray-200 pt-10">
             {stats.map((stat, index) => (
-               <AnimatedCounter key={index} value={stat.value} label={stat.label} />
+              <AnimatedCounter key={index} value={stat.value} label={stat.label} />
             ))}
           </div>
 

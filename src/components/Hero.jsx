@@ -13,7 +13,7 @@ const Hero = () => {
   };
 
   return (
-    <section id='home' className="relative h-full w-full flex flex-col justify-between pt-32 pb-16 px-6 sm:px-12 lg:px-20 overflow-hidden">
+    <section id='home' className="relative min-h-[100svh] md:min-h-[100svh] w-full flex flex-col justify-between pt-32 pb-16 px-6 sm:px-12 lg:px-20 overflow-hidden">
       
       {/* TOP LEFT SECTION */}
       <div className="flex flex-col items-start text-left relative z-20 w-full max-w-5xl">
@@ -32,7 +32,7 @@ const Hero = () => {
         </div>
         
         {/* 2. Main Heading */}
-        <h1 className="font-playfair text-6xl sm:text-8xl lg:text-[8rem] font-semibold text-gray-900 leading-[1.1]">
+        <h1 className="font-playfair text-6xl sm:text-8xl lg:text-[8rem] font-semibold text-gray-900 leading-[1.1] tracking-[-0.02em]">
           
           {/* Line 1: Full Stack */}
           <div className="overflow-hidden pb-6 -mb-6 pt-4 -mt-4">
@@ -84,7 +84,7 @@ const Hero = () => {
 
         {/* RIGHT SIDE: Subtitle */}
         <div className="flex flex-col items-end text-right">
-            {/* Line 1 */}
+            
             <div className="overflow-hidden pb-2 -mb-2">
                 <motion.p
                     custom={0.8}
@@ -96,7 +96,7 @@ const Hero = () => {
                     Crafting Robust
                 </motion.p>
             </div>
-            {/* Line 2 */}
+
             <div className="overflow-hidden pb-2 -mb-2">
                 <motion.p
                     custom={1.0}
@@ -108,7 +108,7 @@ const Hero = () => {
                     MERN Experiences,
                 </motion.p>
             </div>
-            {/* Line 3 */}
+
             <div className="overflow-hidden pb-2 -mb-2">
                 <motion.p
                     custom={1.2}
